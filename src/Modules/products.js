@@ -3,22 +3,22 @@ const mongoose = require("mongoose");
 const ProductSchema = new mongoose.Schema({
     name: {
         type: String,
-         required: true,
+        required: true,
     },
     description:{
         type: String,
-         required: true,
+        required: true,
     },
     category: {
         type: String,
-         required: true,
+        required: true,
     },
     price: {
-        type: Integer,
+        type: Number, // <-- Cambiado de Integer a Number
         required: true,
     },
     quantity: {
-        type: Integer,
+        type: Number, // <-- Cambiado de Integer a Number
         required: true,
     },
     CreationDate: {
@@ -28,4 +28,3 @@ const ProductSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Product", ProductSchema);
-
