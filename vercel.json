@@ -13,6 +13,6 @@
     }
   ],
   "env": {
-    "MONGO_URI": "@mongo_uri"
+    "MONGO_URI": "mongodb+srv://zuri:ZurielValencia07102005@zuricluster.n0vr3hz.mongodb.net/?appName=ZuriCluster"
   }
 }

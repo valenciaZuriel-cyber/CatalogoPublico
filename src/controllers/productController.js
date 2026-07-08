@@ -25,6 +25,9 @@ exports.createProduct = async (req, res) => {
 // 2. READ: Obtener todo el catálogo público
 exports.getAllProducts = async (req, res) => {
     try {
+        if (moongose.connection.readyState !== 1) {
+            await moongose.connect(process.env.MONGO_URI);
+        }
         const products = await Product.find();
         res.status(200).json(products);
     } catch (error) {
