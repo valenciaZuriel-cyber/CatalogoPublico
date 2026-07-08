@@ -1,18 +1,17 @@
-const Product = require("../Modules/products.js"); // Ajusta la ruta a tu archivo de arriba
+const Product = require("../Modules/products.js"); // <-- Asegúrate de que coincida EXACTAMENTE con tus carpetas reales
+const mongoose = require("mongoose"); // <-- ¡FALTABA ESTA IMPORTACIÓN!
 
 // 1. CREATE: Agregar un nuevo producto al catálogo
 exports.createProduct = async (req, res) => {
     try {
         const { name, description, category, price, quantity } = req.body;
 
-        // Creamos el producto usando los campos exactos de tu esquema
         const newProduct = new Product({
             name,
             description,
             category,
             price,
             quantity
-            // CreationDate se genera solo gracias al 'default: Date.now'
         });
 
         await newProduct.save();
@@ -25,8 +24,9 @@ exports.createProduct = async (req, res) => {
 // 2. READ: Obtener todo el catálogo público
 exports.getAllProducts = async (req, res) => {
     try {
-        if (moongose.connection.readyState !== 1) {
-            await moongose.connect(process.env.MONGO_URI);
+        // Corregido de 'moongose' a 'mongoose'
+        if (mongoose.connection.readyState !== 1) {
+            await mongoose.connect(process.env.MONGO_URI);
         }
         const products = await Product.find();
         res.status(200).json(products);
@@ -48,13 +48,13 @@ exports.getProductById = async (req, res) => {
     }
 };
 
-// 4. UPDATE: Editar datos del producto (actualizar stock, cambiar precio, etc.)
+// 4. UPDATE: Editar datos del producto
 exports.updateProduct = async (req, res) => {
     try {
         const updatedProduct = await Product.findByIdAndUpdate(
             req.params.id,
-            req.body, // Aquí pasamos los cambios que mandes en el JSON
-            { new: true, runValidators: true } // Para que devuelva el producto ya editado y valide las reglas
+            req.body,
+            { new: true, runValidators: true }
         );
 
         if (!updatedProduct) {
