@@ -19,3 +19,5 @@ app.use('/api/v2/products', productRoutes);
 app.listen(port, () => {
   console.log(`Hello world - Servidor corriendo en el puerto ${port}`);
 });
+
+module.exports = app; 
