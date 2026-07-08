@@ -6,7 +6,7 @@ const express = require('express');
 const productRoutes = require('./src/routes/productRoutes.js'); 
 
 const app = express();
-const port = 5100;
+const port = process.env.PORT || 5100; // <-- Cambiado aquí para compatibilidad con la nube
 
 // Middleware fundamental para capturar los datos (req.body) enviados en JSON
 app.use(express.json()); 
@@ -20,4 +20,4 @@ app.listen(port, () => {
   console.log(`Hello world - Servidor corriendo en el puerto ${port}`);
 });
 
-module.exports = app; 
+module.exports = app;
