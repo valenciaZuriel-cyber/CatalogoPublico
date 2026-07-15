@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const productController = require("../controllers/productController");
-const verificarTokenGenerico = require('../middlewares/authMiddleware');
+const verificarTokenGenerico = require('../middleware/authMiddleware');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'llave_generica_secreta_123';
 
