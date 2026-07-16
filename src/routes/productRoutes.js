@@ -3,15 +3,18 @@ const router = express.Router();
 const productController = require("../controllers/productController");
 const verificarTokenGenerico = require('../middleware/authMiddleware');
 
-// Rutas para la raíz: /api/v2/products (Protegidas con TokenApp)
-router.route("/")
-    .post(verificarTokenGenerico, productController.createProduct)
-    .get(verificarTokenGenerico, productController.getAllProducts);
+// Aplicar la validación de App_token a todas las consultas del módulo
+router.use(verificarTokenGenerico);
 
-// Rutas con ID específico: /api/v2/products/:id (Protegidas con TokenApp)
+// Rutas para la raíz: /api/v2/products
+router.route("/")
+    .get(productController.getAllProducts)
+    .post(productController.createProduct);
+
+// Rutas con ID específico: /api/v2/products/:id
 router.route("/:id")
-    .get(verificarTokenGenerico, productController.getProductById)
-    .put(verificarTokenGenerico, productController.updateProduct)
-    .delete(verificarTokenGenerico, productController.deleteProduct);
+    .get(productController.getProductById)
+    .put(productController.updateProduct)
+    .delete(productController.deleteProduct);
 
 module.exports = router;

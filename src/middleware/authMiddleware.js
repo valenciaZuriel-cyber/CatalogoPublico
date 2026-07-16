@@ -1,18 +1,14 @@
+const jwt = require('jsonwebtoken');
+
 const verificarTokenGenerico = (req, res, next) => {
-    // Capturamos el token del header 'Authorization' (Formato: Bearer TOKEN)
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+    const token = req.headers['app-token'];
+    const decoded = jwt.decode(token);
 
-    // Definición del único token estático de la aplicación
-    const TokenApp = process.env.TOKEN_APP || 'MiTokenSecretoFijo123_App';
-
-    if (!token || token !== TokenApp) {
-        return res.status(401).json({ 
-            message: "Acceso denegado. TokenApp inválido o ausente para realizar consultas." 
-        });
+    if (!token || !decoded || token !== process.env.App_token) {
+        return res.status(401).json({ message: "Acceso denegado" });
     }
 
-    next(); // Si coincide, permite el paso al controlador de la consulta
+    next();
 };
 
 module.exports = verificarTokenGenerico;
