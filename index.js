@@ -1,12 +1,16 @@
 require("dotenv").config();
 const connectDB = require('./src/config/database.js');
 const express = require('express');
+const helmet = require('helmet'); // Requerimos la librería de Helmet
 
 // Importamos las rutas del catálogo
 const productRoutes = require('./src/routes/productRoutes.js'); 
 
 const app = express();
-const port = process.env.PORT || 5100; // <-- Cambiado aquí para compatibilidad con la nube
+const port = process.env.PORT || 5100; // 
+
+//  Protegemos los encabezados HTTP con Helmet (siempre al inicio)
+app.use(helmet());
 
 // Middleware fundamental para capturar los datos (req.body) enviados en JSON
 app.use(express.json()); 
